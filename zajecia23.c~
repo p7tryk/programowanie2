@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+
+int main()
+{
+  int c,nc,smc,sc;
+  nc=0;
+  sc=0;
+  smc=0;
+  
+  while( (c=getchar())!=EOF)
+    {
+      if (c=='a'||c=='e'||c=='o'||c=='u')
+	{
+	  smc++;
+	}
+      else if(c==' '||c=='\n'||c=='\t')
+	{
+	  nc++;
+	}
+      else
+	{
+	  sc++;
+	}
+      
+    }
+  printf("liczba bialych znakow %d, liczba spolglosek %d, liczba samoglosek %d\n",nc,sc,smc);
+}
