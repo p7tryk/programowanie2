@@ -2,38 +2,18 @@
 #include <ctype.h>
 int main()
 {
-  int c,wc,cc;
-  char lastc;
-  wc=0;
-  cc=0;
-  int smc =0;
+  int lower, upper, step;
 
-  FILE *infile;
-  infile=fopen("zajecia31.txt","r");
-  
-  if(infile==NULL)
+  double fahr, cel;
+  lower=0;
+  upper=300;
+  step=20;
+  fahr=lower;
+
+  for(fahr;fahr<=upper;fahr=fahr+step)
     {
-      printf("nie mozna otworzyc pliku\n");
-      return 0;
+      cel= (5.0/9.0)+(fahr-32.0);
+      printf("%4.0f %6.1f\n", fahr, cel);
     }
-	
-
   
-  while((c=fgetc(infile))!=EOF) // dopoki nie koniec pliku  znak -> c
-    {
-      c=tolower(c); //zamienia c na male znaki
-      cc++;
-      if(isalpha(c)&&isspace(lastc))
-	{
-	  wc++;
-	}
-      if(c=='a'||c=='e'||c=='u'||c=='y'||c=='i'||c=='o')
-	{
-	  smc++;
-	}
-      lastc=c;
-    }
-  printf("liczba slow %d liczba znakow %d liczba samoglosek %d\n", wc,cc,smc);
-
-  fclose(infile);
 }
