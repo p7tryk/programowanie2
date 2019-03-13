@@ -53,3 +53,4 @@ dkms.conf
 
 #emacs backupfiles
 *~
+resources/
