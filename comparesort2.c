@@ -88,19 +88,22 @@ int main()
       tab2[i]=tab[i];
       tab3[i]=tab[i];
     }
+
+  // printf("sortowanie posortowanego zbioru\n");
   
-  //printf("sortowanie losowego zbioru\n");
+  insertionsort(tab);
+
   
   bubblet=clock();
-  bubblesort(tab1);
+  bubblesort(tab);
   bubblet=clock()-bubblet;
 
   insertiont=clock();
-  insertionsort(tab2);
+  insertionsort(tab);
   insertiont=clock()-insertiont;
 
   selectiont=clock();
-  selectionsort(tab3);
+  selectionsort(tab);
   selectiont=clock()-selectiont;
   //----------------------------
   /*

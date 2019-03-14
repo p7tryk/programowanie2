@@ -83,13 +83,13 @@ int main()
   
   for(int i=0;i<SIZE;i++)
     {
-      tab[i]=((double)(rand()%50));
+      tab[i]=SIZE-i;
       tab1[i]=tab[i];
       tab2[i]=tab[i];
       tab3[i]=tab[i];
     }
-  
-  //printf("sortowanie losowego zbioru\n");
+
+  //printf("odwocony zbior\n");
   
   bubblet=clock();
   bubblesort(tab1);
