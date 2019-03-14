@@ -1,5 +1,7 @@
 #include <stdio.h>
-#define SIZE 10
+#include <stdlib.h>
+#include <time.h>
+#define SIZE 60000
 
 void bubblesort(double *tab)
 {
@@ -66,18 +68,42 @@ void selectionsort(double *tab)
 
 int main()
 {
-  double tab[SIZE] = {1.1 , 4.3 , 6.7 , -3.4, 2.4 , 0.1 , 4.2 , -1.2, 0.01 , 1.3 };
-  double tab1[SIZE] = {1.1 , 4.3 , 6.7 , -3.4, 2.4 , 0.1 , 4.2 , -1.2, 0.01 , 1.3 };
-  double tab2[SIZE] = {1.1 , 4.3 , 6.7 , -3.4, 2.4 , 0.1 , 4.2 , -1.2, 0.01 , 1.3 };
-  double tab3[SIZE] = {1.1 , 4.3 , 6.7 , -3.4, 2.4 , 0.1 , 4.2 , -1.2, 0.01 , 1.3 };
-  
-  bubblesort(tab1);
-  insertionsort(tab2);
-  selectionsort(tab3);
-  //----------------------------
+  double tab[SIZE];
+  time_t t;
 
-  printf("bubble sort\n");
+  int bubblet;
+  int insertiont;
+  int selectiont;
+
+  double tab1[SIZE];
+  double tab2[SIZE];
+  double tab3[SIZE];
   
+  srand((unsigned) time(&t));
+  
+  for(int i=0;i<SIZE;i++)
+    {
+      tab[i]=((double)(rand()%50));
+      tab1[i]=tab[i];
+      tab2[i]=tab[i];
+      tab3[i]=tab[i];
+    }
+    
+  
+  bubblet=clock();
+  bubblesort(tab1);
+  bubblet=clock()-bubblet;
+
+  insertiont=clock();
+  insertionsort(tab2);
+  insertiont=clock()-insertiont;
+
+  selectiont=clock();
+  selectionsort(tab3);
+  selectiont=clock()-selectiont;
+  //----------------------------
+  /*
+  printf("bubble sort\n");
   for(int n=0;n<SIZE;n++)
     {
       printf("%1.1f ",tab1[n]);
@@ -95,10 +121,15 @@ int main()
       printf("%1.1f ",tab3[n]);
     }
   printf("\noriginal\n");
-  
   for(int n=0;n<SIZE;n++)
     {
       printf("%1.1f ",tab[n]);
     }
   printf("\n");
+  */
+
+  printf("bubble time= %1.2f,\nselection time=%1.2f,\ninsertion time=%1.2f\n",(double)bubblet/CLOCKS_PER_SEC,(double)selectiont/CLOCKS_PER_SEC,(double)insertiont/CLOCKS_PER_SEC);
+
+
+
 }
