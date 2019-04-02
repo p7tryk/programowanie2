@@ -63,7 +63,7 @@ int wybor(double * tab, int size)
   while(true)
     {
       
-      printf("w:wpisywanie\nz:zapis do pliku\nr:sort rosnaco \nm:sort malejaco\no:odwrocic\nz:\nk: wyjscie\np: printout\n");
+      printf("w:wpisywanie\nz:zapis do pliku\nr:sort rosnaco \nm:sort malejaco\no:odwrocic\nk: wyjscie\np: printout\n");
       do
 	{
 	  scanf("%c",&choice);
