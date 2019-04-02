@@ -1,7 +1,7 @@
 #include <stdio.h>
 #define MAXSIZE 10
 
-//TODO odwrotnie
+//TODO fix odwrotnie
 void shellsort(double * tab, int size)
 {
   double temp;
@@ -69,6 +69,7 @@ int main(int argc, char* argv[])
   if(infile==NULL)
     {
       printf("Nie mozna otworzyc plik infile\n");
+      fclose(outfile);
       return 1;
     }
   
@@ -92,24 +93,21 @@ int main(int argc, char* argv[])
     case 1:
       break;
     case 2:
-      reverse(tab,size-1);
+      reverse(tab,size);
       break;
     case 3:
-      shellsort(tab,size);
+      shellsort(tab,size-1);
       break;
       
     case 4:
       shellsort(tab,size-1);
-      //reverse(tab,size);
+      // reverse(tab,size);
       break;
     default:
       fclose(infile);
       fclose(outfile);
-	
-      return 0;
       
-      
-      
+      return 0;      
     }
 
   
@@ -118,7 +116,15 @@ int main(int argc, char* argv[])
       fprintf(outfile,"%lf\n",tab[i]);
       //printf("%lf\n",tab[i]);
     }
+  //debug
+  printf("size=%d\n",size);
+  for(i=0; i<MAXSIZE;i++)
+    {
+      printf("%lf\n",tab[i]);
+    }
+  
 
+  
   fclose(infile);
   fclose(outfile);
   return 0;
