@@ -1,33 +1,54 @@
 #include <stdio.h>
 #define MAXSIZE 10
 
-//TODO wyswietlic menu zapytac czy posortowac, odwrotnie posortowac, zostawic
-void insertionsort(double * tab,int size)
+//TODO odwrotnie
+void shellsort(double * tab, int size)
 {
   double temp;
-  int i=1;
-  int j=0;
+
+  int i,j,h;
   
-  for(i=1;i<size;i++)
+  for(h=size/2;h!=0;h=h/2)
     {
-        temp=tab[i];
-        j=i-1;
- 
-        while((temp<tab[j])&&(j>=0))
-	  {
-            tab[j+1]=tab[j];
-	    j=j-1;
-	  }
-	tab[j+1]=temp;
+      for(i=size-h;i>=0;i--)
+	{
+	  temp=tab[i];
+	  j=i+h;
+	  while(j<=size&&temp>tab[j])
+	    {
+	      tab[j-h]=tab[j];
+	      j=j+h;
+	    }
+	  tab[j-h]=temp;
+	}
     }
+  
+  
+}
+int reverse(double * tab, int size)
+{
+  double temp;
+  for(int i=0; i<size/2;i++)
+    {
+      tab[i]= temp;
+      tab[i]= tab[size-i];
+      tab[size-i]=temp;
+    }
+
 }
 
 
 
 
-
-int main()
+int main(int argc, char* argv[])
 {
+  if(argc<3)
+    {
+      printf("Podaj pliki jako argument\na.out infile outfile\n");
+      return 0;
+    }
+
+  
   double tab[MAXSIZE];
   double x;
   int i;
@@ -35,19 +56,19 @@ int main()
   int size=MAXSIZE;
 
   FILE *outfile;
-  outfile= fopen("resources/file2.txt", "w");
+  outfile= fopen(argv[2], "w");
   if(outfile==NULL)
     {
-      printf("Nie mozna otworzyc pliku\n");
+      printf("Nie mozna otworzyc pliku outfile\n");
       return 1;
     }
   
   FILE *infile;
   
-  infile= fopen("resources/file1.txt", "rt");
+  infile= fopen(argv[1], "rt");
   if(infile==NULL)
     {
-      printf("Nie mozna otworzyc pliku\n");
+      printf("Nie mozna otworzyc plik infile\n");
       return 1;
     }
   
@@ -62,7 +83,35 @@ int main()
       // printf("%3.1lf\n",x);
     }
   
-  insertionsort(tab,size);
+  printf("Podaj tryb programu:\n1. Przepisz liczby z pliku\n2. Przepisz odwrotnie liczby z pliku\n3. Posortuj liczby z pliku\n4. Posortuj odwrotnie liczby z pliku\nDowolny klawisz. Nic nie rob\n");
+  
+  int choice;
+  scanf("%d",&choice);
+  switch(choice)
+    {
+    case 1:
+      break;
+    case 2:
+      reverse(tab,size-1);
+      break;
+    case 3:
+      shellsort(tab,size);
+      break;
+      
+    case 4:
+      shellsort(tab,size-1);
+      //reverse(tab,size);
+      break;
+    default:
+      fclose(infile);
+      fclose(outfile);
+	
+      return 0;
+      
+      
+      
+    }
+
   
   for(i=0; i<size;i++)
     {
