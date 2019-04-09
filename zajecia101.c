@@ -5,11 +5,10 @@
 double sredniageom(double dat[], int size)
 {
   double temp=1;
-  double realsize= size;
 
   for(int i=0;i<size;i++)
     temp*=dat[i];
-  return pow(temp,1/realsize);
+  return pow(temp,1/(double)size);
 }
 
 
@@ -33,18 +32,64 @@ void drukuj(double dat[],int num)
     {
       printf("%lf,",dat[i]);
     }
-  printf("\n");
+  printf("\n\n");
     
+}
+
+double max(double dat[], int num)
+{
+  double temp=dat[0];
+  for(int i=0; i<num;i++)
+    {
+      if(dat[i]>temp)
+	temp = dat[i];
+    }
+  return temp;
+}
+
+double min(double dat[], int num)
+{
+  double temp=dat[0];
+  for(int i=0; i<num;i++)
+    {
+      if(dat[i]<temp)
+	temp = dat[i];
+    }
+  return temp;
+}
+
+int match(double dat[],int num, double match)
+{
+  for(int i=0;i<num;i++)
+    {
+      if(dat[i]==match)
+	return i;
+    }
+  return -1;
+}
+
+int count(double dat[],int num, double match)
+{
+  int temp=0;
+  for(int i=0;i<num;i++)
+    {
+      if(dat[i]==match)
+	temp++;
+    }
+  return temp;
 }
 
 
 int main()
 {
   int i;
-  double tab[SIZE] = { 2.3, 1.7, 3.3 , 4.7, 2.4 ,6.7};
+  double tab[SIZE] = { 2.3, 1.7, 3.3 , 4.7, 2.4 ,3.3};
   
   drukuj(tab, SIZE);
   printf("%lf\n",sredniageom(tab, SIZE));
   printf("%lf\n",sredniaharm(tab, SIZE));
-  
+  printf("%lf\n",max(tab, SIZE));
+  printf("%lf\n",min(tab, SIZE));
+  printf("index %d\n", match(tab,SIZE,tab[2]));
+  printf("%d razy\n", count(tab,SIZE,tab[2]));
 }
