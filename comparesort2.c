@@ -2,6 +2,29 @@
 #include <stdlib.h>
 #include <time.h>
 #define SIZE 60000
+void shellsort(double * tab)
+{
+  double temp;
+
+  int i,j,h;
+  
+  for(h=SIZE/2;h!=0;h=h/2)
+    {
+      for(i=SIZE-h;i>=0;i--)
+	{
+	  temp=tab[i];
+	  j=i+h;
+	  while(j<=SIZE&&temp>tab[j])
+	    {
+	      tab[j-h]=tab[j];
+	      j=j+h;
+	    }
+	  tab[j-h]=temp;
+	}
+    }
+  
+  
+}
 
 void bubblesort(double *tab)
 {
@@ -74,10 +97,16 @@ int main()
   int bubblet;
   int insertiont;
   int selectiont;
+  int shellt;
+  int quickt;
+  int heapt;
 
   double tab1[SIZE];
   double tab2[SIZE];
   double tab3[SIZE];
+  double tab4[SIZE];
+  double tab5[SIZE];
+  double tab6[SIZE];
   
   srand((unsigned) time(&t));
   
@@ -87,52 +116,33 @@ int main()
       tab1[i]=tab[i];
       tab2[i]=tab[i];
       tab3[i]=tab[i];
+      tab4[i]=tab[i];
+      tab5[i]=tab[i];
+      tab6[i]=tab[i];
+	
     }
-
-  // printf("sortowanie posortowanego zbioru\n");
   
-  insertionsort(tab);
-
+  //printf("sortowanie losowego zbioru\n");
   
   bubblet=clock();
-  bubblesort(tab);
+  bubblesort(tab1);
   bubblet=clock()-bubblet;
 
   insertiont=clock();
-  insertionsort(tab);
+  insertionsort(tab2);
   insertiont=clock()-insertiont;
 
   selectiont=clock();
-  selectionsort(tab);
+  selectionsort(tab3);
   selectiont=clock()-selectiont;
-  //----------------------------
-  /*
-  printf("bubble sort\n");
-  for(int n=0;n<SIZE;n++)
-    {
-      printf("%1.1f ",tab1[n]);
-    }
-  printf("\nselectionsort\n");
-  
-  for(int n=0;n<SIZE;n++)
-    {
-      printf("%1.1f ",tab2[n]);
-    }
-  printf("\ninsertionsort\n");
-  
-  for(int n=0;n<SIZE;n++)
-    {
-      printf("%1.1f ",tab3[n]);
-    }
-  printf("\noriginal\n");
-  for(int n=0;n<SIZE;n++)
-    {
-      printf("%1.1f ",tab[n]);
-    }
-  printf("\n");
-  */
 
-  printf("b;%1.2f,\ns;%1.2f,\ni;%1.2f\n",(double)bubblet/CLOCKS_PER_SEC,(double)selectiont/CLOCKS_PER_SEC,(double)insertiont/CLOCKS_PER_SEC);
+  shellt=clock();
+  shellsort(tab4);
+  shellt=clock()-shellt;
+  //----------------------------
+
+
+  printf("b;%1.3f,\ns;%1.3f,\ni;%1.3f\nsh;%1.3f\n",(double)bubblet/CLOCKS_PER_SEC,(double)selectiont/CLOCKS_PER_SEC,(double)insertiont/CLOCKS_PER_SEC, (double)shellt/CLOCKS_PER_SEC);
 
 
 
