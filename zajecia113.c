@@ -47,12 +47,15 @@ int inputemployes(struct employee* employees, char * filename)
   int emplyno, n;
   int linesread =0;
 
-  if((indata=fopen(filename,"rt"))==NULL) return 0;
-
+  if((indata=fopen(filename,"rt"))==NULL)
+    {
+      printf("Couldn't read from file %s\n",filename);
+      return 0;
+    }
   for(emplyno=0;emplyno<MAXEMPLY;emplyno++)
     {
       linesread++;
-      if(fscanf(indata,"%29s %29s %d",
+      if(fscanf(indata,"%29s %29s %i",
 		employees[emplyno].firstname,
 		employees[emplyno].lastname,
 		&(employees[emplyno].age)) <=0)  
@@ -67,7 +70,7 @@ void emplyprint(struct employee* employees, int size)
 {
   for(int n=0;n<size;n++)
     {
-      printf("%s,%s,%d\n",
+      printf("%s\t%s\t%d\n",
 	     employees[n].firstname, employees[n].lastname,employees[n].age);
     }
   printf("\n");
@@ -80,11 +83,13 @@ void writeemployees(struct employee* employees, int size, char * filename)
   int emplyno, n;
 
   if((outdata=fopen(filename,"w"))==NULL)
-    return;
-
+    {
+      printf("Couldn't write to file %s\n",filename);
+      return;
+    }
   for(emplyno=0;emplyno<size;emplyno++)
     {
-      fprintf(outdata,"%29s %29s %d",
+      fprintf(outdata,"%29s\t%29s\t%d\n",
 	      employees[emplyno].firstname,
 	      employees[emplyno].lastname,
 	      employees[emplyno].age);
@@ -94,25 +99,21 @@ void writeemployees(struct employee* employees, int size, char * filename)
 
 }
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
   struct employee employees[MAXEMPLY];
 
-  char inputfile[100]= "resources/people.txt";
-  char * infilename = inputfile;
-  
+  char intemp[]= "resources/people.txt";
+  char * infilename = intemp;
   if(argc>1)
     infilename = argv[1];
-  else
-    infilename="resources/people.txt";
 
-  char outputfile[100]= "resources/people5.txt";
-  char * outfilename = outputfile;
-  
+
+  char outtemp[]= "resources/people5.txt";
+  char * outfilename = outtemp;
   if(argc>2)
     outfilename = argv[2];
-  else
-    outfilename="resources/people.txt";
+
   
   
   int emplynumber = inputemployes(employees,infilename);
