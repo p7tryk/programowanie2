@@ -11,23 +11,11 @@ struct employee
   char lastname[MAXNAME];
   short int age;
 };
-int cmpstr(char * str1, char * str2) //returns 1 if first string is first alphabetically
-{
-  for(int i=0; i<strlen(str1);i++)
-    {
-	 if(str1[i]<=str2[i])
-	   {
-	     return 1;
-	   }
-    
-    }
-return 0;
-
-}
 
 
 
-void shellsort(struct employee * tab, int size, int mask)
+
+void shellsort(struct employee * tab, int size)
   {
   struct employee temp;
 
@@ -39,7 +27,7 @@ void shellsort(struct employee * tab, int size, int mask)
 	{
 	  temp=tab[i];
 	  j=i+h;
-	  while(j<size&&cmpstr(temp.lastname,tab[j].lastname))
+	  while(j<size&&temp.age>tab[j].age)
 	    {
 	      tab[j-h]=tab[j];
 	      j=j+h;
@@ -52,46 +40,89 @@ void shellsort(struct employee * tab, int size, int mask)
 }
 
 
-int main()
+int inputemployes(struct employee* employees, char * filename)
 {
-  struct employee employees[MAXEMPLY];
-
   FILE *indata;
 
   int emplyno, n;
+  int linesread =0;
 
-  if((indata=fopen("resources/people.txt","rt"))==NULL) return 0;
+  if((indata=fopen(filename,"rt"))==NULL) return 0;
 
   for(emplyno=0;emplyno<MAXEMPLY;emplyno++)
     {
+      linesread++;
       if(fscanf(indata,"%29s %29s %d",
 		employees[emplyno].firstname,
 		employees[emplyno].lastname,
-		&(employees[emplyno].age)) <=0)
+		&(employees[emplyno].age)) <=0)  
 	break;
     }
   fclose(indata);
+  linesread--;//remove last empty element;
+  return linesread;
+}
 
-  for(int n=0;n<emplyno;n++)
+void emplyprint(struct employee* employees, int size)
+{
+  for(int n=0;n<size;n++)
     {
       printf("%s,%s,%d\n",
 	     employees[n].firstname, employees[n].lastname,employees[n].age);
     }
   printf("\n");
+}
 
-  shellsort(employees, emplyno,0);
-  for(int n=0;n<emplyno;n++)
+void writeemployees(struct employee* employees, int size, char * filename)
+{
+  FILE *outdata;
+
+  int emplyno, n;
+
+  if((outdata=fopen(filename,"w"))==NULL)
+    return;
+
+  for(emplyno=0;emplyno<size;emplyno++)
     {
-      printf("%s,%s,%d\n",
-	     employees[n].firstname, employees[n].lastname,employees[n].age);
+      fprintf(outdata,"%29s %29s %d",
+	      employees[emplyno].firstname,
+	      employees[emplyno].lastname,
+	      employees[emplyno].age);
     }
+  fclose(outdata);
 
+
+}
+
+int main(int argc, char **argv)
+{
+  struct employee employees[MAXEMPLY];
+
+  char inputfile[100]= "resources/people.txt";
+  char * infilename = inputfile;
+  
+  if(argc>1)
+    infilename = argv[1];
+  else
+    infilename="resources/people.txt";
+
+  char outputfile[100]= "resources/people5.txt";
+  char * outfilename = outputfile;
+  
+  if(argc>2)
+    outfilename = argv[2];
+  else
+    outfilename="resources/people.txt";
+  
+  
+  int emplynumber = inputemployes(employees,infilename);
   
 
+  
+  emplyprint(employees, emplynumber);
+  shellsort(employees, emplynumber);
+  emplyprint(employees, emplynumber);
+  writeemployees(employees,emplynumber,outfilename);
 
- 
-
-    
-
-
+  return 0;
 }
