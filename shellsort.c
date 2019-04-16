@@ -2,42 +2,31 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#define SIZE 10
+#define SIZE 3
 
-void quicksort(double tab[], int size, int l,int p)
+void shellsort(double * tab, int size)
 {
-  int i = l;
-  int j = p;
+  double temp;
 
-  int x;
-  int temp;
-
-  x=tab[(l+p)/2];
-  do
+  int i,j,h;
+  h=size/2;
+  
+  for(h=size/2;h!=0;h=h/2)
     {
-      while (tab[i] < x)
-	i++;
-      while (tab[j] > x)
-	j--;
-      if(i<=j)
+      for(i=size-h;i>=0;i--)
 	{
 	  temp=tab[i];
-	  tab[i]=tab[j];
-	  tab[j]=temp;
-	
-	  i++;
-	  j--;
+	  j=i+h;
+	  while(j<size&&temp>tab[j])
+	    {
+	      tab[j-h]=tab[j];
+	      j=j+h;
+	    }
+	  tab[j-h]=temp;
 	}
     }
-  while(i<j);
   
-  if(l<j)
-    quicksort(tab, size, l, j);
-  if(i<p)
-    quicksort(tab, size, i, p);
-      
-
-
+  
 }
 
 
@@ -102,7 +91,7 @@ int main(int argc, char*argv[])
     
   
   drukuj(src,SIZE);
-  quicksort(tab,SIZE, 0, SIZE);
+  shellsort(tab,SIZE);
   drukuj(tab,SIZE);
   
 }

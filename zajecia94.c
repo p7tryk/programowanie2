@@ -16,3 +16,4 @@ int main()
   for(int i=1;i<MAX;i++)
     printf("%d liczba ciagu f jest %d\n",i,fib(i));
 }
+z

@@ -4,6 +4,42 @@
 #include <string.h>
 #define SIZE 60000
 
+void quicksort(double tab[], int size, int l,int p)
+{
+  int i = l;
+  int j = p;
+
+  int x;
+  int temp;
+
+  x=tab[(l+p)/2];
+  do
+    {
+      while (tab[i] < x)
+	i++;
+      while (tab[j] > x)
+	j--;
+      if(i<=j)
+	{
+	  temp=tab[i];
+	  tab[i]=tab[j];
+	  tab[j]=temp;
+	
+	  i++;
+	  j--;
+	}
+    }
+  while(i<j);
+  
+  if(l<j)
+    quicksort(tab, size, l, j);
+  if(i<p)
+    quicksort(tab, size, i, p);
+      
+
+
+}
+
 void shellsort(double * tab, int size)
 {
   double temp;
@@ -16,7 +52,7 @@ void shellsort(double * tab, int size)
 	{
 	  temp=tab[i];
 	  j=i+h;
-	  while(j<=size&&temp>tab[j])
+	  while(j<size&&temp>tab[j])
 	    {
 	      tab[j-h]=tab[j];
 	      j=j+h;
@@ -131,8 +167,8 @@ int main(int argc, char*argv[])
   int quickt;
   int heapt;
 
-  double tab[SIZE];
-  double src[SIZE];
+  double * tab = (double*) malloc (SIZE * sizeof(double));
+  double * src = (double*) malloc (SIZE * sizeof(double));
 
   fill(src,SIZE);
   if(argc>1)
@@ -167,9 +203,14 @@ int main(int argc, char*argv[])
   shellt=clock();
   shellsort(tab,SIZE);
   shellt=clock()-shellt;
+
+  copytab(tab, src, SIZE);
+  quickt=clock();
+  quicksort(tab,SIZE,0,SIZE);
+  quickt=clock()-quickt;
   //----------------------------
 
-  printf("%1.3f\t%1.3f\t%1.3f\t%1.3f\n",(double)bubblet/CLOCKS_PER_SEC,(double)selectiont/CLOCKS_PER_SEC,(double)insertiont/CLOCKS_PER_SEC, (double)shellt/CLOCKS_PER_SEC);
+  printf("%1.3f\t%1.3f\t%1.3f\t%1.3f\t%1.3f\n",(double)bubblet/CLOCKS_PER_SEC,(double)selectiont/CLOCKS_PER_SEC,(double)insertiont/CLOCKS_PER_SEC, (double)shellt/CLOCKS_PER_SEC, (double)quickt/CLOCKS_PER_SEC);
 
 
 
