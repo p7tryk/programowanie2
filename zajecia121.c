@@ -13,7 +13,7 @@ void sphere(double r, double *s, double *v)
 int main()
 {
   double r,s,v;
-  scanf("%f",&r);
+  scanf("%lf",&r);
   sphere(r,&s,&v);
   printf("r=%f s=%f v=%f\n", r, s, v);
 
