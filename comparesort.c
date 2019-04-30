@@ -4,7 +4,7 @@
 #include <string.h>
 #define SIZE 60000
 
-void quicksort(double tab[], int size, int l,int p)
+void quicksort(double * tab, int size, int l,int p)
 {
   int i = l;
   int j = p;
