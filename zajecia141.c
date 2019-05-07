@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #define MAXEMPLY 100
 #define MAXNAME 30
 
@@ -16,9 +17,9 @@ struct employee
 
 
 void shellsort(struct employee * tab, int size)
-  {
+{
   struct employee temp;
-
+  
   int i,j,h;
   
   for(h=size/2;h!=0;h=h/2)
@@ -40,7 +41,7 @@ void shellsort(struct employee * tab, int size)
 }
 
 
-int inputemployes(struct employee* employees, char * filename)
+int inputemployes(struct employee* employees, char * filename, int maxemply)
 {
   FILE *indata;
 
@@ -52,10 +53,10 @@ int inputemployes(struct employee* employees, char * filename)
       printf("Couldn't read from file %s\n",filename);
       return 0;
     }
-  for(emplyno=0;emplyno<MAXEMPLY;emplyno++)
+  for(emplyno=0;emplyno<maxemply;emplyno++)
     {
       linesread++;
-      if(fscanf(indata,"%29s %29s %i",
+      if(fscanf(indata,"%29s %29s %hd",
 		employees[emplyno].firstname,
 		employees[emplyno].lastname,
 		&(employees[emplyno].age)) <=0)  
@@ -64,6 +65,27 @@ int inputemployes(struct employee* employees, char * filename)
   fclose(indata);
   linesread--;//remove last empty element;
   return linesread;
+}
+
+int countemployes(char * filename)
+{
+  struct employee record;
+  FILE *indata;
+  int n;
+  if((indata=fopen(filename,"rt"))==NULL)
+    {
+      printf("Couldn't read from file %s\n",filename);
+      return -1;
+    }
+  for(n=0;n>=0;n++)
+    {
+      if(fscanf(indata, "%29s %29s %hd",
+		record.firstname,
+		record.lastname,
+		&record.age)<=0)
+	return n; //returns number of employees read
+    }
+
 }
 
 void printsingle(struct employee* employee)
@@ -91,7 +113,7 @@ void writeemployees(struct employee* employees, int size, char * filename)
 {
   FILE *outdata;
 
-  int emplyno, n;
+  int emplyno;
 
   if((outdata=fopen(filename,"w"))==NULL)
     {
@@ -112,7 +134,7 @@ void writeemployees(struct employee* employees, int size, char * filename)
 
 int main(int argc, char *argv[])
 {
-  struct employee employees[MAXEMPLY];
+  
 
   char intemp[]= "resources/people.txt";
   char * infilename = intemp;
@@ -127,14 +149,16 @@ int main(int argc, char *argv[])
 
   
   
-  int emplynumber = inputemployes(employees,infilename);
-  
+  int emplynumber = countemployes(infilename);
+  printf("%d\n", emplynumber);
 
-  
+  struct employee * employees = (struct employee *) malloc(emplynumber * sizeof(struct employee));
+
+  inputemployes(employees, infilename, emplynumber);
   emplyprint(employees, emplynumber);
   shellsort(employees, emplynumber);
   emplyprint(employees, emplynumber);
   writeemployees(employees,emplynumber,outfilename);
-
+  free(employees);
   return 0;
 }

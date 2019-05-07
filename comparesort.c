@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#define SIZE 60000
+#define SIZE 200000
 
 void quicksort(double * tab, int size, int l,int p)
 {
@@ -160,55 +160,90 @@ int reverse(double * tab, int size)
 int main(int argc, char*argv[])
 {
 
-  int bubblet;
-  int insertiont;
-  int selectiont;
-  int shellt;
-  int quickt;
-  int heapt;
+  int bubblet= 0;
+  int insertiont= 0;
+  int selectiont= 0;
+  int shellt= 0;
+  int quickt= 0;
+  int heapt = 0;
 
   double * tab = (double*) malloc (SIZE * sizeof(double));
   double * src = (double*) malloc (SIZE * sizeof(double));
 
   fill(src,SIZE);
+  int mode = 0;
   if(argc>1)
     {
-      
-      if(strcmp(argv[1],"-s"))
+      printf("%s\n",argv[1]);
+      if(!strcmp(argv[1],"-s"))
 	{
 	  shellsort(src,SIZE);
+	  printf("sorted mode\n");
 	}
-      else if(strcmp(argv[1],"-r"))
-    {
-      shellsort(src,SIZE);
-      reverse(src, SIZE);
-    };
+      else if(!strcmp(argv[1],"-r"))
+	{
+	  shellsort(src,SIZE);
+	  reverse(src, SIZE);
+	  printf("reverse sorted mode\n");
+	}
+      else if(!strcmp(argv[1],"-q"))
+	{
+	  printf("skipping simple sorts\n");
+	  mode=1;
+	}
   }
-  copytab(tab, src, SIZE);
-  bubblet=clock();
-  bubblesort(tab,SIZE);
-  bubblet=clock()-bubblet;
 
-  copytab(tab, src, SIZE);
-  insertiont=clock();
-  insertionsort(tab,SIZE);
-  insertiont=clock()-insertiont;
-
-  copytab(tab, src, SIZE);
-  selectiont=clock();
-  selectionsort(tab, SIZE);
-  selectiont=clock()-selectiont;
   
-  copytab(tab, src, SIZE);
+  if(argc>2)
+    {
+      if(strcmp(argv[2],"-q"))
+	{
+	  printf("skipping simple sorts\n");
+	  mode=1;
+	}
+      if(strcmp(argv[2],"-s"))
+	{
+	  shellsort(src,SIZE);
+	  printf("sorted mode\n");
+	}
+      else if(strcmp(argv[2],"-r"))
+	{
+	  shellsort(src,SIZE);
+	  reverse(src, SIZE);
+	  printf("reverse sorted mode\n");
+	};
+      
+    }
+  
+  if(!mode) //jezeli jest quickmode to skip
+    {
+      memcpy(tab,src,SIZE * sizeof(double));
+      bubblet=clock();
+      bubblesort(tab,SIZE);
+      bubblet=clock()-bubblet;
+      
+      memcpy(tab,src,SIZE * sizeof(double));
+      insertiont=clock();
+      insertionsort(tab,SIZE);
+      insertiont=clock()-insertiont;
+      
+      memcpy(tab,src,SIZE * sizeof(double));
+      selectiont=clock();
+      selectionsort(tab, SIZE);
+      selectiont=clock()-selectiont;
+    }
+  memcpy(tab,src,SIZE * sizeof(double));
   shellt=clock();
   shellsort(tab,SIZE);
   shellt=clock()-shellt;
 
-  copytab(tab, src, SIZE);
+  memcpy(tab,src,SIZE * sizeof(double));
   quickt=clock();
   quicksort(tab,SIZE,0,SIZE);
   quickt=clock()-quickt;
   //----------------------------
+  free(tab);
+  free(src);
 
   printf("%1.3f\t%1.3f\t%1.3f\t%1.3f\t%1.3f\n",(double)bubblet/CLOCKS_PER_SEC,(double)selectiont/CLOCKS_PER_SEC,(double)insertiont/CLOCKS_PER_SEC, (double)shellt/CLOCKS_PER_SEC, (double)quickt/CLOCKS_PER_SEC);
 
