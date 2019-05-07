@@ -40,18 +40,17 @@ void shellsort(struct employee * tab, int size)
   
 }
 
-
 int inputemployes(struct employee* employees, char * filename, int maxemply)
 {
   FILE *indata;
 
-  int emplyno, n;
+  int emplyno;
   int linesread =0;
 
   if((indata=fopen(filename,"rt"))==NULL)
     {
       printf("Couldn't read from file %s\n",filename);
-      return 0;
+      return -1;
     }
   for(emplyno=0;emplyno<maxemply;emplyno++)
     {
@@ -85,7 +84,7 @@ int countemployes(char * filename)
 		&record.age)<=0)
 	return n; //returns number of employees read
     }
-
+  return -1; //just in case
 }
 
 void printsingle(struct employee* employee)
@@ -150,7 +149,7 @@ int main(int argc, char *argv[])
   
   
   int emplynumber = countemployes(infilename);
-  printf("%d\n", emplynumber);
+
 
   struct employee * employees = (struct employee *) malloc(emplynumber * sizeof(struct employee));
 
