@@ -59,6 +59,6 @@ int main()
   
   const char * s2 = "niesmiertelny";
 
-  printf("%s %d\n",strcat(s1,s2),strlen(s1));
+  printf("%s %d\n",strsupercat(s1,s2),strlen(s1));
 
 }
