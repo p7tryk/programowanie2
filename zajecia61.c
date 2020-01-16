@@ -10,7 +10,7 @@ int main()
   n = 5;
   
   /* Intializes random number generator */
-  srand((unsigned) time(&t));
+  srand((unsigned) time(NULL));
   
   /* Print 5 random numbers from 0 to 49 */
   for( i = 0 ; i < n ; i++ )
