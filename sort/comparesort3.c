@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#define SIZE 60000
+#include "define.h"
 void shellsort(double * tab)
 {
   double temp;

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#define SIZE 600000
+#include "define.h"
 
 void quicksort(double tab[], int size, int l,int p)
 {

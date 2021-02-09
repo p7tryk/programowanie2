@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#define SIZE 200000
+#include "define.h"
 
 void quicksort(double * tab, int size, int l,int p)
 {
@@ -172,24 +172,30 @@ int main(int argc, char*argv[])
 
   fill(src,SIZE);
   int mode = 0;
+
+  printf(ANSI_COLOR_RED ANSI_BOLD);
   if(argc>1)
     {
-      printf("%s\n",argv[1]);
+      //printf("%s\n",argv[1]);
       if(!strcmp(argv[1],"-s"))
 	{
 	  shellsort(src,SIZE);
-	  printf("sorted mode\n");
+	  printf("sorted\n");
 	}
       else if(!strcmp(argv[1],"-r"))
 	{
 	  shellsort(src,SIZE);
 	  reverse(src, SIZE);
-	  printf("reverse sorted mode\n");
+	  printf("reverse sorted\n");
 	}
       else if(!strcmp(argv[1],"-q"))
 	{
-	  printf("skipping simple sorts\n");
+	  //printf("skipping simple sorts\n");
 	  mode=1;
+	}
+      else
+	{
+	  printf("random\n");
 	}
   }
 
@@ -198,22 +204,24 @@ int main(int argc, char*argv[])
     {
       if(strcmp(argv[2],"-q"))
 	{
-	  printf("skipping simple sorts\n");
+	  //printf("skipping simple sorts\n");
 	  mode=1;
 	}
       if(strcmp(argv[2],"-s"))
 	{
 	  shellsort(src,SIZE);
-	  printf("sorted mode\n");
+	  printf("sorted\n");
 	}
       else if(strcmp(argv[2],"-r"))
 	{
 	  shellsort(src,SIZE);
 	  reverse(src, SIZE);
-	  printf("reverse sorted mode\n");
+	  printf("reverse\n");
 	};
       
     }
+
+  printf(ANSI_COLOR_RESET);
   
   if(!mode) //jezeli jest quickmode to skip
     {
@@ -245,8 +253,8 @@ int main(int argc, char*argv[])
   free(tab);
   free(src);
 
-  printf("%1.3f\t%1.3f\t%1.3f\t%1.3f\t%1.3f\n",(double)bubblet/CLOCKS_PER_SEC,(double)selectiont/CLOCKS_PER_SEC,(double)insertiont/CLOCKS_PER_SEC, (double)shellt/CLOCKS_PER_SEC, (double)quickt/CLOCKS_PER_SEC);
+  printf("bubble\t\t%1.3f     \nselection\t%1.3f   \ninsertion\t%1.3f   \nshell\t\t%1.3f   \nquick\t\t%1.3f\n",(double)bubblet/CLOCKS_PER_SEC,(double)selectiont/CLOCKS_PER_SEC,(double)insertiont/CLOCKS_PER_SEC, (double)shellt/CLOCKS_PER_SEC, (double)quickt/CLOCKS_PER_SEC);
 
-
+  fflush(stdout);
 
 }

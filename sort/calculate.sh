@@ -1,21 +1,20 @@
 #!/bin/bash
-for i in {1...2}
-do
+
+rm sortcomparison.txt
+# for i in {1...1}
+# do
     ./comparesort1.out >> sortcomparison.txt
-    echo "random"
-    echo "random" >> sortcomparisons.txt
-done
+# done
 
-for i in {1...2}
-do
-    ./comparesort2.out >> sortcomparison.txt
-    echo "ordered"
-    echo "ordered" >> sortcomparisons.txt
-done
+# for i in {1...1}
+# do
+    ./comparesort1.out -s >> sortcomparison.txt
+# done
 
-for i in {1...2}
-do
-    ./comparesort3.out >> sortcomparison.txt
-    echo "reversed"
-    echo "reversed" >> sortcomparisons.txt
-done
+# for i in {1...1}
+# do
+    ./comparesort1.out -r >> sortcomparison.txt
+    
+# done
+
+cat sortcomparison.txt
